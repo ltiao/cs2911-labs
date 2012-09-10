@@ -1,0 +1,207 @@
+\documentclass[11pt,oneside]{article}
+\usepackage{geometry}			% See geometry.pdf to learn the layout options.
+								% There are lots.
+								
+\geometry{letterpaper}			% ... or a4paper or a5paper or ... 
+%\geometry{landscape}			% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}	% Activate to begin paragraphs with an empty
+								% line rather than an indent
+
+\usepackage{ifpdf}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+
+% Definitions
+\def\myauthor{Author}
+\def\mytitle{Title}
+\def\mycopyright{\myauthor}
+\def\mykeywords{}
+\def\mybibliostyle{plain}
+\def\mybibliocommand{}
+\def\mysubtitle{}
+
+
+
+%
+%	PDF Stuff
+%
+
+\ifpdf
+  \pdfoutput=1
+  \usepackage[
+  	plainpages=false,
+  	pdfpagelabels,
+  	bookmarksnumbered,
+  	pdftitle={\mytitle},
+  	pagebackref,
+  	pdfauthor={\myauthor},
+  	pdfkeywords={\mykeywords}
+  	]{hyperref}
+  \usepackage{memhfixc}
+\fi
+
+
+% Title Information
+\title{\mytitle \\ \mysubtitle}
+\author{\myauthor}
+
+\begin{document}
+
+
+% Title Page
+
+\maketitle
+
+% Copyright Page
+\textcopyright{} \mycopyright
+
+%
+% Main Content
+%
+
+
+% Layout settings
+\setlength{\parindent}{1em}
+
+\section{\textbf{COMP2911} Engineering Design in Computing}
+\label{comp2911engineeringdesignincomputing}
+
+\subsection{Tutorial - Week 1}
+\label{tutorial-week1}
+
+\textbf{Discussion Points}
+\label{discussionpoints}
+
+\vskip 2em
+\hrule height 0.4pt
+\vskip 2em
+
+{\itshape The Good, the Bad and the Ugly (aka Getting to Know You)}
+\label{thegoodthebadandtheuglyakagettingtoknowyou}
+
+\begin{enumerate}
+
+\item \textbf{The Ugly:}\begin{itemize}
+
+\item \textbf{Name:} Louis Tiao
+\item \textbf{Nickname:} None
+\item \textbf{UNSW Program:} Computer Science/Mathematics
+\item \textbf{Other:}\ldots
+\end{itemize}
+
+
+\item \textbf{The Bad:}\begin{itemize}
+
+\item \ldots
+\end{itemize}
+
+
+\item \textbf{The Good:}\begin{itemize}
+
+\item \ldots
+\end{itemize}
+
+
+\end{enumerate}
+
+\vskip 2em
+\hrule height 0.4pt
+\vskip 2em
+
+{\itshape People As Programmers}
+\label{peopleasprogrammers}
+
+\begin{enumerate}
+
+\item I see a little bit of myself in most of the programmer predilections from A-Z with respect to the technical inclinations and not so much the personal idiosyncrasies. Specifically, I'm similar to Belligerent Brian and possibly Zealous Zack when it comes to my propensity to ``select cutting edge technologies simply for its buzzword compliance, betting that cool acronyms and shiny new methodologies will make me appear progressive and forward-looking.'' I can also be a bit of a Feature Creep Frank when I indulge in personal projects in that I simply fail to exercise any form of self-restrain from adding a myriad of cool but often frivolous features.
+\item Computer Programmers feel that coding is the entirety of their job. It can be said that they are slightly narrow-minded in that they work to close bug tracker issues, while Software Developers have a broad view and deep understanding of the business goals and works to deliver business value and uses technology as a means to an end to solving business problems. It is unlikely that the proverbial ``person-in-the-street.'' {\itshape Their intent is to solve a business problem, not just to close an issue in a bug tracking system.}
+\end{enumerate}
+
+\vskip 2em
+\hrule height 0.4pt
+\vskip 2em
+
+{\itshape Software Requirements}
+\label{softwarerequirements}
+
+\begin{enumerate}
+
+\item \textbf{What happened to the Mars Polar Lander in 1999?}
+
+The software triggered the shutdown of the Lander's descent engines, believing that the Lander had already landed on the surface of Mars.
+
+
+\item \textbf{What went wrong?}
+
+The essential problem was a breakdown in communication of software requirements. The revised requirements never made it into the lower-level requirements. The testing process was also lax in that full regression testing was not performed, so after certain changes were made and bug fixes were done, only a part of the overall system was tested and the touchdown sensor bugs were not detected as a result. 
+
+
+\item \textbf{What lessons can you learn about team-based software development from this?}
+
+The importance of:
+
+\begin{itemize}
+
+\item Communication
+\item Requirement Tracking
+\item Regression Testing
+\end{itemize}
+
+
+\end{enumerate}
+
+\vskip 2em
+\hrule height 0.4pt
+\vskip 2em
+
+{\itshape10 Elements of Good Software Design}
+\label{0elementsofgoodsoftwaredesign}
+
+\begin{enumerate}
+
+\item TBH, I feel like most of the elements listed were slightly esoteric at this stage, only understandable by seasoned Object-Oriented developers\ldots But otherwise, everything else was pretty much common-sense and hard not to agree with, e.g.
+\begin{itemize}
+
+\item Provides The Necessary Functionality
+\item Is As Simple As Current And Foreseeable Constraints Will Allow
+\item Eliminates Duplication
+\item Is Robustly Documented
+\end{itemize}
+
+
+\item Yes. I feel the order of important is reasonable, given the important of the thing being designed to meet its purpose, and also being as simple as possible.
+\item The above points are consistent with these points from Dieter Rams:
+
+\begin{itemize}
+
+\item Good design makes a product useful
+
+{\itshape Synonymous with ``Provides The Necessary Functionality''.}
+
+
+\item Good design is as little design as possible
+
+{\itshape Consistent with being as simple as current and foreseeable constraints will allow.}
+
+
+\item Good design is long-lasting
+
+{\itshape A robustly documented product should make the design long-lasting.}
+
+
+\item Good design makes a product understandable
+
+{\itshape Simplicity, and robust documentation should make the product understandable.}
+
+
+\end{itemize}
+
+
+\end{enumerate}
+
+% Bibliography
+\bibliographystyle{\mybibliostyle}
+\mybibliocommand
+
+\end{document}

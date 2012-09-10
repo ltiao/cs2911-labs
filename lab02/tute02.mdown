@@ -1,0 +1,62 @@
+# **COMP2911** Engineering Design in Computing
+## Tutorial - Week 2
+***
+### The Timer ADT and Implementation
+
+	1,000,000,000 nanoseconds = 1 second
+	60,000,000,000 nanoseconds = 60 seconds = 1 minute 
+	3,600,000,000,000 nanoseconds = 60 minutes = 1 hour
+	86,400,000,000,000 nanoseconds = 24 hours = 1 day
+	31,536,000,000,000,000 nanoseconds = 365 days = 1 year
+
+*	The `long` data type is a 64-bit signed two's complement integer, so `long.MAX_VALUE` = 2^63-1 = 9,223,372,036,854,775,807
+	
+	Hence, the longest time duration that can be recorded (approximate answer in years) is
+
+	(2^63-1)/31,536,000,000,000,000 = 9,223,372,036,854,775,807/31,536,000,000,000,000 = 292.47120867753601620370
+
+	So we can record up to about 292 years and 5 months.
+
+	Similarly, for an unsigned 64-bit integer, we have
+
+	2^64/31,536,000,000,000,000 = 584.94241735507203247082
+
+	So we can record up to about 585 years. 292 years is probably enough...
+
+*	The `int` data type is a 32-bit signed two's complement integer, so `int.MAX_VALUE` = 2^31-1 =  2,147,483,647
+
+	So the longest time duration that can be recorded with `int` is a measly 2,147,483,647/1,000,000,000 = 2.147483647 seconds.
+
+*	In case the sum of the duration and difference between two successive time points is greater than 2^63-1, in which case, the new total duration will overflow and either become negative or have some other unpredictable behaviour.
+
+
+1.	Elapsed interval
+2.	Have a suspend timestamp 
+3.	Zero
+4. 
+5. 
+
+*	display_intervals with List
+*	mark
+
+***
+### The Line ADT
+
+point, gradient
+
+ax+by+c=0
+
+Point X1
+Point Y1
+Point X2
+Point Y2
+
+Boolean testPoint ( Point n )
+double disPoint( )
+static double angleLines ( Line L1, Line L2 )
+static Point intersection ( Line L1, Line L2 )
+moveLine (double distance)
+
+***
+### The Video ADT
+
