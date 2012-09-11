@@ -29,7 +29,7 @@ public class MergeSorterTest extends SorterTest {
 
 	@Override @Before
 	public void setUp() throws Exception {
-		sorter = new SelectionSorter();
+		sorter = new MergeSorter();
 	}
 
 }
