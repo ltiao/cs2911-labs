@@ -1,14 +1,26 @@
 package lab08;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Board implements Display {
 
 	static final int BOARD_SIZE = 9;
-	//List<String>[] playerMoves = new LinkedList<String>[2];
+	static final char PLAYER_1_ICON = 'A';
+	static final char PLAYER_2_ICON = 'B';
 	
+	@SuppressWarnings("unchecked")
+	LinkedList<String>[] playerMoves = (LinkedList<String>[]) new LinkedList[2];
+	Position[] playerPosition = new Position[2];
+	
+	public Board() {
+		// Have to initialize these array elements due to dodgy Java generic flaw/features
+		playerMoves[0] = new LinkedList<String>();
+		playerMoves[1] = new LinkedList<String>();
+		playerPosition[0] = new Position(0,4);
+		playerPosition[1] = new Position(8,4);
+	}
+
 	@Override
 	public void display(String moves) {
 		parse(moves);
@@ -22,7 +34,7 @@ public class Board implements Display {
 					if (i%2==0)
 						System.out.print(" ");
 					else
-						System.out.print((i+1)/2);
+						System.out.print((i+1)>>1);
 				}
 				print (i,j);
 			}
@@ -31,9 +43,27 @@ public class Board implements Display {
 	
 	private void parse (String moves) {
 	     StringTokenizer st = new StringTokenizer(moves);
-	     while (st.hasMoreTokens()) {
-	         System.out.println(st.nextToken());
+	     String temp = null;
+	     for (int i = 0 ; st.hasMoreTokens() ; i++) {
+	    	 temp = st.nextToken();
+	    	 playerMoves[i%2].add(temp);
+	    	 //System.out.println(temp);
 	     }
+	     /*for (String e : playerMoves[0]) {
+	    	 System.out.println(e);
+	     }
+	     for (String e : playerMoves[1]) {
+	    	 System.out.println(e);
+	     }*/
+	     System.out.println(playerMoves[0].getLast());
+	     System.out.println(playerMoves[1].getLast());
+	     playerPosition[0] = new Position(playerMoves[0].getLast().charAt(1)-'1',playerMoves[0].getLast().charAt(0)-'a');
+	     playerPosition[1] = new Position(playerMoves[1].getLast().charAt(1)-'1',playerMoves[1].getLast().charAt(0)-'a');
+	}
+	
+	private boolean isPlayerPosition (int i, int j) {
+		Position interpolatedPosition = new Position((i-1)>>1,(j-1)>>1);
+		return playerPosition[0].equals(interpolatedPosition) || playerPosition[1].equals(interpolatedPosition);
 	}
 	
 	private void print (int i, int j) {
@@ -41,8 +71,13 @@ public class Board implements Display {
 			if (j%2 == 0) {
 				System.out.print ("+");
 			}				
-			else
-				System.out.print ("   ");
+			else {
+				if (isPlayerPosition(i,j)) {
+					System.out.print (" * ");
+				} else {
+					System.out.print ("   ");	
+				}
+			}
 		} else {
 			if (i%2 == 0)
 				System.out.print ("---");
