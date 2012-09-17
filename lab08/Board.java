@@ -61,9 +61,13 @@ public class Board implements Display {
 	     playerPosition[1] = new Position(playerMoves[1].getLast().charAt(1)-'1',playerMoves[1].getLast().charAt(0)-'a');
 	}
 	
-	private boolean isPlayerPosition (int i, int j) {
-		Position interpolatedPosition = new Position((i-1)>>1,(j-1)>>1);
-		return playerPosition[0].equals(interpolatedPosition) || playerPosition[1].equals(interpolatedPosition);
+	private boolean hasPlayer (int i, int j) {
+		Position transformedPosition = new Position((i-1)>>1,(j-1)>>1);
+		return playerPosition[0].equals(transformedPosition) || playerPosition[1].equals(transformedPosition);
+	}
+	
+	private boolean hasWall (int i, int j) {
+		return false;
 	}
 	
 	private void print (int i, int j) {
@@ -72,7 +76,7 @@ public class Board implements Display {
 				System.out.print ("+");
 			}				
 			else {
-				if (isPlayerPosition(i,j)) {
+				if (hasPlayer(i,j)) {
 					System.out.print (" * ");
 				} else {
 					System.out.print ("   ");	
@@ -80,9 +84,15 @@ public class Board implements Display {
 			}
 		} else {
 			if (i%2 == 0)
-				System.out.print ("---");
+				if (hasWall(i,j))
+					System.out.print ("###");
+				else
+					System.out.print ("---");
 			else {
-				System.out.print ("|");
+				if (hasWall(i,j))
+					System.out.print ("#");
+				else
+					System.out.print ("|");		
 			}
 				
 		}
