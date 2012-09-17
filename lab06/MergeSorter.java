@@ -12,6 +12,7 @@ public class MergeSorter implements Sorter {
 		//tmpArray = (E[]) Array.newInstance(E[],data.length);
 		@SuppressWarnings("unchecked")
 		E[] tmpArray = (E[]) Array.newInstance(data[0].getClass(), data.length);
+		//Object[] tmpArray = new Object [data.length];
 		mergeSort( data, tmpArray, 0, data.length - 1 );
 	}
 
