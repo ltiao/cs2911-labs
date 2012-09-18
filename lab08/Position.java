@@ -21,12 +21,22 @@ public class Position {
     }
     
     @Override
+	public String toString() {
+		return "Row: [" + x + "], Column: [" + y+"]";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Position) {
 			Position c = (Position)obj;
 			return (c.x==x && c.y==y);
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return x+y;
 	}
     
 }
