@@ -42,12 +42,12 @@ public class Board implements Display {
 	     for (int i = 0; st.hasMoreTokens() ; i++) {
 	    	 String temp = st.nextToken();
 	    	 if (temp.length() == 3) {
-	    		 walls.put(new Position(temp.charAt(1)-'1',temp.charAt(0)-'a'),temp.charAt(2)=='h'?Orientation.HORIZONTAL:Orientation.VERTICAL);
+	    		 walls.put(translatePosition(temp),translateOrientation(temp));
 	    	 } else {
 	    		 if (i%2==0) {
-	    			 player1Position = new Position(temp.charAt(1)-'1',temp.charAt(0)-'a');
+	    			 player1Position = translatePosition(temp);
 	    		 } else {
-	    			 player2Position = new Position(temp.charAt(1)-'1',temp.charAt(0)-'a');
+	    			 player2Position = translatePosition(temp);
 	    		 }
 	    	 }
 	     }
@@ -56,32 +56,14 @@ public class Board implements Display {
 	     }
 	     System.out.println(walls.containsKey(new Position(0,3)));
 	}
-
+	
 	private boolean hasPlayer (int i, int j) {
 		Position transformedPosition = new Position((i-1)>>1,(j-1)>>1);
 		return player1Position.equals(transformedPosition) || player2Position.equals(transformedPosition);
 	}
 
 	private boolean hasWall (int i, int j) {
-		//System.out.println(new Position(i,j));
-		if (i%2 == 1) {
-			i = i/2+1;
-		}
-		else {
-			i = i/2;
-		}
-		if (j%2 ==1) {
-			j = j/2+1;
-		}
-		else {
-			j = j/2;
-		}
-		if (walls.containsKey(new Position(i,j))) {
-			System.out.println();
-			System.out.println("***" + new Position(i,j) + "***");
-			System.out.println();
-		}
-		return walls.containsKey(new Position(i,j));
+		return false;
 	}
 
 	private void print (int i, int j) {
@@ -114,4 +96,12 @@ public class Board implements Display {
 			System.out.println ();
 	}
 
+	private Position translatePosition (String move) {
+		return new Position(move.charAt(1)-'1',move.charAt(0)-'a');
+	}
+	
+	private Orientation translateOrientation (String move) {
+		return move.charAt(2)=='h'?Orientation.HORIZONTAL:Orientation.VERTICAL;	
+	}
+	
 }
