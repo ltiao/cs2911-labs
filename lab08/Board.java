@@ -16,6 +16,7 @@ public class Board implements Display {
 	HashMap <Position,Orientation> walls = new HashMap<Position,Orientation>(); 
 	Position player1Position = new Position(0,4);
 	Position player2Position = new Position(8,4);
+	HashMap <Position,Orientation> johnWalls = new HashMap<Position,Orientation>();
 	
 	@Override
 	public void display(String moves) {
@@ -42,19 +43,26 @@ public class Board implements Display {
 	     for (int i = 0; st.hasMoreTokens() ; i++) {
 	    	 String temp = st.nextToken();
 	    	 if (temp.length() == 3) {
-	    		 walls.put(translatePosition(temp),translateOrientation(temp));
+	    		 walls.put (translatePosition(temp), translateOrientation(temp));
 	    	 } else {
 	    		 if (i%2==0) {
-	    			 player1Position = translatePosition(temp);
+	    			 player1Position = translatePosition (temp);
 	    		 } else {
-	    			 player2Position = translatePosition(temp);
+	    			 player2Position = translatePosition (temp);
 	    		 }
 	    	 }
 	     }
 	     for (Position e : walls.keySet()) {
-	    	 System.out.println(e + " = " + walls.get(e));
+	    	 //System.out.println(e + " = " + walls.get(e));
+	    	 if (walls.get(e) == Orientation.HORIZONTAL) {
+	    		 johnWalls.put(new Position((e.getX()+1)<<1,((e.getY()+1)<<1)+1), walls.get(e));
+	    		 johnWalls.put(new Position((e.getX()+1)<<1,((e.getY()+1)<<1)-1), walls.get(e));
+	    	 } else {
+	    		 johnWalls.put(new Position(((e.getX()+1)<<1)+1,(e.getY()+1)<<1), walls.get(e));
+	    		 johnWalls.put(new Position(((e.getX()+1)<<1)-1,(e.getY()+1)<<1), walls.get(e));
+	    	 }
 	     }
-	     System.out.println(walls.containsKey(new Position(0,3)));
+	     //System.out.println(walls.containsKey(new Position(0,3)));
 	}
 	
 	private boolean hasPlayer (int i, int j) {
@@ -63,28 +71,26 @@ public class Board implements Display {
 	}
 
 	private boolean hasWall (int i, int j) {
-		return false;
+		return johnWalls.containsKey(new Position(i, j));
 	}
 
 	private void print (int i, int j) {
 		if ((i+j)%2 == 0) {
 			if (j%2 == 0) {
 				System.out.print ("+");
-			}				
-			else {
-				if (hasPlayer(i,j)) {
+			} else {
+				if (hasPlayer(i,j))
 					System.out.print (" * ");
-				} else {
+				else
 					System.out.print ("   ");	
-				}
 			}
 		} else {
-			if (i%2 == 0)
+			if (i%2 == 0) {
 				if (hasWall(i,j))
 					System.out.print ("###");
 				else
 					System.out.print ("---");
-			else {
+			} else {
 				if (hasWall(i,j))
 					System.out.print ("#");
 				else
