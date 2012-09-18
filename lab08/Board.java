@@ -64,7 +64,24 @@ public class Board implements Display {
 
 	private boolean hasWall (int i, int j) {
 		//System.out.println(new Position(i,j));
-		return walls.containsKey(new Position(i/2-1,j/2-1));
+		if (i%2 == 1) {
+			i = i/2+1;
+		}
+		else {
+			i = i/2;
+		}
+		if (j%2 ==1) {
+			j = j/2+1;
+		}
+		else {
+			j = j/2;
+		}
+		if (walls.containsKey(new Position(i,j))) {
+			System.out.println();
+			System.out.println("***" + new Position(i,j) + "***");
+			System.out.println();
+		}
+		return walls.containsKey(new Position(i,j));
 	}
 
 	private void print (int i, int j) {
