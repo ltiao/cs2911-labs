@@ -51,8 +51,8 @@ public class Board implements Display {
 	    		 }
 	    	 }
 	     }
-	     // FIXME Optimize this hacky approach. Should still use Hash tables for constant lookup but the key cannot be Square. 
-	     // And figure out an useful value. Orientation is pretty useless.
+	     // FIXME Fix this somewhat hacky approach. Should still use Hash tables for constant lookup but the key cannot be Square. 
+	     // and figure out an useful value. Orientation is pretty useless.
 	     // Square should be strictly used to model actual squares on the game, not as a coordinate system for rendering the ASCII game board.
 	     for (Wall e : walls) {
 	    	 if (e.getOrientation() == Orientation.HORIZONTAL) {

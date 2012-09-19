@@ -10,7 +10,7 @@ public class Wall {
 	}
 
     public Wall(String s) {
-    	// TODO Should probably have preconditions to check the string is valid though that may be the job of isValid Move
+    	// TODO Should probably have preconditions to check the string is valid though that may be the job of isValidMove
     	if (s.length() > 2) {
         	this.northWest = new Square (s.substring(0, 2));
         	this.orientation = s.charAt(2) == 'h' ? Orientation.HORIZONTAL : Orientation.VERTICAL;

@@ -13,7 +13,7 @@ public class Square {
     }
     
     public Square(String s) {
-    	// TODO Should probably have preconditions to check the string is valid though that may be the job of isValid Move
+    	// TODO Should probably have preconditions to check the string is valid though that may be the job of isValidMove
     	if (s.length() > 1) {
         	this.row = s.charAt(1)-'1';
         	this.column = s.charAt(0)-'a';    	
