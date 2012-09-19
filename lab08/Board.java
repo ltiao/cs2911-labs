@@ -10,7 +10,6 @@ public class Board implements Display {
 	static final char PLAYER_1_ICON = 'A';
 	static final char PLAYER_2_ICON = 'B';
 
-	//HashMap <Square,Orientation> walls = new HashMap<Square,Orientation>(); 
 	Square player1Square = new Square("e9");
 	Square player2Square = new Square("e1");
 	LinkedList <Wall> walls = new LinkedList<Wall>();
@@ -18,6 +17,7 @@ public class Board implements Display {
 	
 	@Override
 	public void display(String moves) {
+		// FIXME Need to reset fields after running display
 		parse(moves);
 		System.out.print("   ");
 		for (char c = 'a' ; c < 'j' ; c++)
@@ -51,6 +51,9 @@ public class Board implements Display {
 	    		 }
 	    	 }
 	     }
+	     // FIXME Optimize this hacky approach. Should still use Hash tables for constant lookup but the key cannot be Square. 
+	     // And figure out an useful value. Orientation is pretty useless.
+	     // Square should be strictly used to model actual squares on the game, not as a coordinate system for rendering the ASCII game board.
 	     for (Wall e : walls) {
 	    	 if (e.getOrientation() == Orientation.HORIZONTAL) {
 	    		 johnWalls.put(new Square((e.getNorthWest().getRow()+1)<<1,((e.getNorthWest().getColumn()+1)<<1)+1), e.getOrientation());
@@ -90,6 +93,7 @@ public class Board implements Display {
 				System.out.print ("+");
 			} else {
 				if (hasPlayer(i,j))
+					// FIXME Need to print actual player pieces.
 					System.out.print (" * ");
 				else
 					System.out.print ("   ");	
