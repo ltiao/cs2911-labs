@@ -51,6 +51,15 @@ public class Board implements Display {
 	    		 }
 	    	 }
 	     }
+	     for (Wall e : walls) {
+	    	 if (e.getOrientation() == Orientation.HORIZONTAL) {
+	    		 johnWalls.put(new Square((e.getNorthWest().getRow()+1)<<1,((e.getNorthWest().getColumn()+1)<<1)+1), e.getOrientation());
+	    		 johnWalls.put(new Square((e.getNorthWest().getRow()+1)<<1,((e.getNorthWest().getColumn()+1)<<1)-1), e.getOrientation());
+	    	 } else {
+	    		 johnWalls.put(new Square(((e.getNorthWest().getRow()+1)<<1)+1,(e.getNorthWest().getColumn()+1)<<1), e.getOrientation());
+	    		 johnWalls.put(new Square(((e.getNorthWest().getRow()+1)<<1)-1,(e.getNorthWest().getColumn()+1)<<1), e.getOrientation());
+	    	 }
+	     }
 	     /*
 	     for (Square e : walls.keySet()) {
 	    	 //System.out.println(e + " = " + walls.get(e));
