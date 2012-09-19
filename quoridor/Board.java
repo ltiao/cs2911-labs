@@ -1,4 +1,4 @@
-package lab08;
+package quoridor;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -87,6 +87,7 @@ public class Board implements Display {
 		return johnWalls.containsKey(new Square(i, j));
 	}
 
+	// TODO Kind of a first world problem, but could make use of Java's unicode support to render a more aesthetic board.
 	private void print (int i, int j) {
 		if ((i+j)%2 == 0) {
 			if (j%2 == 0) {

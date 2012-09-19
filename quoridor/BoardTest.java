@@ -1,4 +1,4 @@
-package lab08;
+package quoridor;
 
 import org.junit.Before;
 import org.junit.Test;

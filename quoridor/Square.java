@@ -1,4 +1,4 @@
-package lab08;
+package quoridor;
 
 public class Square {
 	private int row;

@@ -1,4 +1,4 @@
-package lab08;
+package quoridor;
 
 public interface Display {
 	void display(String moves);

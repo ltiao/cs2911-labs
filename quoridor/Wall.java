@@ -1,4 +1,4 @@
-package lab08;
+package quoridor;
 
 public class Wall {
 	Square northWest = new Square ();
