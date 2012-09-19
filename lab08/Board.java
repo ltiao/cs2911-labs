@@ -13,10 +13,10 @@ public class Board implements Display {
 		VERTICAL, HORIZONTAL;
 	}
 
-	HashMap <Position,Orientation> walls = new HashMap<Position,Orientation>(); 
-	Position player1Position = new Position(0,4);
-	Position player2Position = new Position(8,4);
-	HashMap <Position,Orientation> johnWalls = new HashMap<Position,Orientation>();
+	HashMap <Square,Orientation> walls = new HashMap<Square,Orientation>(); 
+	Square player1Square = new Square("e9");
+	Square player2Square = new Square("e1");
+	private HashMap <Square,Orientation> johnWalls = new HashMap<Square,Orientation>();
 	
 	@Override
 	public void display(String moves) {
@@ -43,35 +43,35 @@ public class Board implements Display {
 	     for (int i = 0; st.hasMoreTokens() ; i++) {
 	    	 String temp = st.nextToken();
 	    	 if (temp.length() == 3) {
-	    		 walls.put (translatePosition(temp), translateOrientation(temp));
+	    		 walls.put (translateSquare(temp), translateOrientation(temp));
 	    	 } else {
 	    		 if (i%2==0) {
-	    			 player1Position = translatePosition (temp);
+	    			 player1Square = new Square (temp);
 	    		 } else {
-	    			 player2Position = translatePosition (temp);
+	    			 player2Square = new Square (temp);
 	    		 }
 	    	 }
 	     }
-	     for (Position e : walls.keySet()) {
+	     for (Square e : walls.keySet()) {
 	    	 //System.out.println(e + " = " + walls.get(e));
 	    	 if (walls.get(e) == Orientation.HORIZONTAL) {
-	    		 johnWalls.put(new Position((e.getX()+1)<<1,((e.getY()+1)<<1)+1), walls.get(e));
-	    		 johnWalls.put(new Position((e.getX()+1)<<1,((e.getY()+1)<<1)-1), walls.get(e));
+	    		 johnWalls.put(new Square((e.getX()+1)<<1,((e.getY()+1)<<1)+1), walls.get(e));
+	    		 johnWalls.put(new Square((e.getX()+1)<<1,((e.getY()+1)<<1)-1), walls.get(e));
 	    	 } else {
-	    		 johnWalls.put(new Position(((e.getX()+1)<<1)+1,(e.getY()+1)<<1), walls.get(e));
-	    		 johnWalls.put(new Position(((e.getX()+1)<<1)-1,(e.getY()+1)<<1), walls.get(e));
+	    		 johnWalls.put(new Square(((e.getX()+1)<<1)+1,(e.getY()+1)<<1), walls.get(e));
+	    		 johnWalls.put(new Square(((e.getX()+1)<<1)-1,(e.getY()+1)<<1), walls.get(e));
 	    	 }
 	     }
 	     //System.out.println(walls.containsKey(new Position(0,3)));
 	}
 	
 	private boolean hasPlayer (int i, int j) {
-		Position transformedPosition = new Position((i-1)>>1,(j-1)>>1);
-		return player1Position.equals(transformedPosition) || player2Position.equals(transformedPosition);
+		Square transformedPosition = new Square((i-1)>>1,(j-1)>>1);
+		return player1Square.equals(transformedPosition) || player2Square.equals(transformedPosition);
 	}
 
 	private boolean hasWall (int i, int j) {
-		return johnWalls.containsKey(new Position(i, j));
+		return johnWalls.containsKey(new Square(i, j));
 	}
 
 	private void print (int i, int j) {
@@ -102,8 +102,8 @@ public class Board implements Display {
 			System.out.println ();
 	}
 
-	private Position translatePosition (String move) {
-		return new Position(move.charAt(1)-'1',move.charAt(0)-'a');
+	private Square translateSquare (String move) {
+		return new Square(move);
 	}
 	
 	private Orientation translateOrientation (String move) {
