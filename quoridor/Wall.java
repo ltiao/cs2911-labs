@@ -25,4 +25,13 @@ public class Wall {
 		return orientation;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Wall) {
+			Wall c = (Wall)obj;
+			return (c.northWest.getRow()==northWest.getRow() && c.northWest.getColumn()==northWest.getColumn() && c.orientation == orientation);
+		}
+		return false;
+	}
+	
 }

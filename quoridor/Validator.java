@@ -10,8 +10,10 @@ public class Validator {
 	
 	// you may add extra fields and methods to this class
 	// but the ProvidedTests code will only call the specified methods
-	LinkedList <String> player1Moves = new LinkedList<String>();
-	LinkedList <String> player2Moves = new LinkedList<String>();
+
+	Square player1Square = new Square("e9");
+	Square player2Square = new Square("e1");
+	LinkedList <Wall> walls = new LinkedList<Wall>();
 	
 	public Validator() {
 		// TODO
@@ -28,14 +30,69 @@ public class Validator {
 	 */
 	public boolean check(String moves) {
 		StringTokenizer st = new StringTokenizer(moves);
-		for (int i = 0 ; st.hasMoreTokens() ; i++) {
-			if (i%2 == 0) {
-				player1Moves.add(st.nextToken());
+		for (int i = 0; st.hasMoreTokens() ; i++) {
+			String temp = st.nextToken();
+			if (temp.length() == 3) {
+				walls.add(new Wall(temp));
 			} else {
-				player2Moves.add(st.nextToken());
+				if (i%2==0) {
+					if (validMove(player1Square, new Square(temp))) {
+						player1Square = new Square (temp);
+					} else {
+						return false;
+					}
+				} else {
+					if (validMove(player2Square, new Square(temp))) {
+						player2Square = new Square (temp);
+					} else {
+						return false;
+					}
+				}
 			}
 		}
 		return false;
 	}
+	
+	private boolean validMove (Square from, Square to) {
+		/* Nota Bene:
+		 * 
+		 * General Movement:
+		 * A pawn can move to a square directly adjacent to itself, provided
+		 * it is not obstructed by a wall or pawn. See below.
+		 * 
+		 * Wall obstruction:
+		 * Say the current square has coordinate (x, y).
+		 * The only walls that can possibly obstruct the
+		 * pawn are those at (x, y), (x, y-1), (x-1, y) and (x-1, y-1).
+		 * 
+		 * Pawn obstruction:
+		 * When a pawn, say B is on a square directly adjacent to pawn A,
+		 * then pawn A can move to any square directly adjacent to pawn B,
+		 * and vice versa.
+		 * 
+		 * tiao
+		 */
+		
+		return true;
+	}
 
+	private boolean validWallPlacement (Square northWest) {
+		return false;
+	}
+	
+	public boolean isOver (String moves) {
+		StringTokenizer st = new StringTokenizer(moves);
+		for (int i = 0; st.hasMoreTokens() ; i++) {
+			if (i%2==0) {
+				if (st.nextToken().endsWith("1")) {
+					return true;
+				}
+			} else {
+				if (st.nextToken().endsWith("9")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
