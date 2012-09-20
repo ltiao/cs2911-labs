@@ -98,4 +98,10 @@ public class ValidatorTest {
 		assertFalse ( "let's stay in the same spot while facing another pawn" ,val.check("e8 e2 e7 e3 e6 e4 e5 e4"));
 	}
 	
+	@Test
+	public void faceOff() {
+		assertFalse ( "Can't walk straight into another pawn" ,val.check("e8 e2 e7 e3 e6 e4 e5 e5"));
+	}
+	
+	
 }
