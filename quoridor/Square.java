@@ -1,5 +1,11 @@
 package quoridor;
 
+// TODO Square should be inherited from a Point object so point can be
+// also be used by the coordinate system for rendering the ASCII game board.
+// All properties inherited except:
+// Constructor should modulo integer parameters by Board.BOARD_SIZE to guarantee perfect hashing.
+// toString should print coordinates in Quoridor text format.
+
 public class Square {
 	private int row;
 	private int column;
@@ -30,7 +36,12 @@ public class Square {
     
     @Override
 	public String toString() {
-    	return "Row: ["+row+"], Column: ["+column+"]";
+    	//return "[Row: "+row+", Column: "+column+"]";
+    	char row = '1';
+    	char column = 'a';
+    	row += this.row;
+    	column += this.column;
+    	return "[" + column + row +  "]";
 	}
 
 	@Override

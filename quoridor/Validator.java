@@ -26,17 +26,24 @@ public class Validator {
 		for (int i = 0; i < Board.BOARD_SIZE; i++) {
 			for (int j = 0; j < Board.BOARD_SIZE; j++) {
 				LinkedList<Square> temp = new LinkedList<Square>();
-				for (int di = -1; di < 2; di++) {
-					if (i+di >= 0 && i+di < Board.BOARD_SIZE) {
-						for (int dj = -1; dj < 2; dj++) {
-							if (j+dj >= 0 && j+dj < Board.BOARD_SIZE) {
-								temp.add(new Square(i+di,i+dj));
-							}
-						}
+				
+				for (int d = -1; d < 2; d++) {
+					if (d != 0) { // Vertices are not self-connecting.
+						if (i+d >= 0 && i+d < Board.BOARD_SIZE)
+							temp.add(new Square(i+d,j));
+						if (j+d >= 0 && j+d < Board.BOARD_SIZE)
+							temp.add(new Square(i,j+d));
 					}
 				}
+				
 				adjacencyList.put(new Square(i,j), temp);
 			}
+		}
+	}
+	
+	public void displayAdjacencyList () {
+		for (Square e:adjacencyList.keySet()) {
+			System.out.println(e+": "+adjacencyList.get(e));
 		}
 	}
 
