@@ -22,9 +22,6 @@ public class Validator {
 	Square player2Square = new Square("e1");
 	LinkedList <Wall> walls = new LinkedList<Wall>();
 	
-	Player player1 = new Player();
-	Player player2 = new Player();
-	
 	public Validator() {
 		for (int i = 0; i < Board.BOARD_SIZE; i++) {
 			for (int j = 0; j < Board.BOARD_SIZE; j++) {
