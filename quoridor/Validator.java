@@ -26,16 +26,14 @@ public class Validator {
 		for (int i = 0; i < Board.BOARD_SIZE; i++) {
 			for (int j = 0; j < Board.BOARD_SIZE; j++) {
 				LinkedList<Square> temp = new LinkedList<Square>();
-				
 				for (int d = -1; d < 2; d++) {
-					if (d != 0) { // Vertices are not self-connecting.
+					if (d != 0) { // Vertices are not self-connecting
 						if (i+d >= 0 && i+d < Board.BOARD_SIZE)
 							temp.add(new Square(i+d,j));
 						if (j+d >= 0 && j+d < Board.BOARD_SIZE)
 							temp.add(new Square(i,j+d));
 					}
 				}
-				
 				adjacencyList.put(new Square(i,j), temp);
 			}
 		}
@@ -64,13 +62,13 @@ public class Validator {
 				walls.add(new Wall(temp));
 			} else {
 				if (i%2==0) {
-					if (validMove(player1Square, new Square(temp))) {
+					if (isAdjacent(player1Square, new Square(temp))) {
 						player1Square = new Square (temp);
 					} else {
 						return false;
 					}
 				} else {
-					if (validMove(player2Square, new Square(temp))) {
+					if (isAdjacent(player2Square, new Square(temp))) {
 						player2Square = new Square (temp);
 					} else {
 						return false;
@@ -81,29 +79,27 @@ public class Validator {
 		return false;
 	}
 	
-	private boolean validMove (Square from, Square to) {
-		/* Nota Bene:
-		 * 
-		 * General Movement:
-		 * A pawn can move to a square directly adjacent to itself, provided
-		 * it is not obstructed by a wall or pawn. See below.
-		 * 
-		 * Wall obstruction:
-		 * Say the current square has coordinate (x, y).
-		 * The only walls that can possibly obstruct the
-		 * pawn are those at (x, y), (x, y-1), (x-1, y) and (x-1, y-1).
-		 * 
-		 * Pawn obstruction:
-		 * When a pawn, say B is on a square directly adjacent to pawn A,
-		 * then pawn A can move to any square directly adjacent to pawn B,
-		 * and vice versa.
-		 * 
-		 * tiao
-		 */
-		
-		
-		
-		return true;
+	/**
+	 * <b>General Movement:</b>
+	 * A pawn can move to a square directly adjacent to itself, provided
+	 * it is not obstructed by a wall or pawn. See below.
+	 * <br/>
+	 * <b>Wall obstruction:</b>
+	 * Say the current square has coordinate (x, y).
+	 * The only walls that can possibly obstruct the
+	 * pawn are those at (x, y), (x, y-1), (x-1, y) and (x-1, y-1).
+	 * <br/>
+	 * <b>Pawn obstruction:</b>
+	 * When a pawn, say B is on a square directly adjacent to pawn A,
+	 * then pawn A can move to any square directly adjacent to pawn B,
+	 * and vice versa.
+	 *
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public boolean isAdjacent (Square a, Square b) {
+		return adjacencyList.get(a).contains(b);
 	}
 
 	public boolean validWallPlacement (Square northWest) {

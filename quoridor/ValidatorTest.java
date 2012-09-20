@@ -28,4 +28,16 @@ public class ValidatorTest {
 		val.displayAdjacencyList();
 	}
 	
+	@Test
+	public void testIsAdjacent() {
+		assertTrue (val.isAdjacent(new Square("e6"), new Square("e7")));
+		assertTrue (val.isAdjacent(new Square("f7"), new Square("e7")));
+	}
+	
+	@Test
+	public void testIsNotAdjacent() {
+		assertFalse (val.isAdjacent(new Square("e2"), new Square("e7")));
+		assertFalse (val.isAdjacent(new Square("g7"), new Square("e7")));
+	}
+	
 }
