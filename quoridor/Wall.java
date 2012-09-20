@@ -1,6 +1,7 @@
 package quoridor;
 
 public class Wall {
+
 	Square northWest = new Square ();
 	Orientation orientation = null; 
 
@@ -37,5 +38,11 @@ public class Wall {
 		}
 		return false;
 	}
+	
+	@Override
+	public int hashCode() {
+		return orientation.ordinal()*northWest.hashCode();
+	}
+
 	
 }
