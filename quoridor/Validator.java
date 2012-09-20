@@ -73,10 +73,12 @@ public class Validator {
 		 * tiao
 		 */
 		
+		
+		
 		return true;
 	}
 
-	private boolean validWallPlacement (Square northWest) {
+	public boolean validWallPlacement (Square northWest) {
 		return false;
 	}
 	

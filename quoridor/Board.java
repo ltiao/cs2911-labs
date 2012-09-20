@@ -86,6 +86,11 @@ public class Board implements Display {
 	private boolean hasWall (int i, int j) {
 		return johnWalls.containsKey(new Square(i, j));
 	}
+	
+	private char player (int i, int j) {
+		Square transformedPosition = new Square((i-1)>>1,(j-1)>>1);
+		return player1Square.equals(transformedPosition) ? PLAYER_1_ICON : PLAYER_2_ICON;
+	}
 
 	// TODO Kind of a first world problem, but could make use of Java's unicode support to render a more aesthetic board.
 	private void print (int i, int j) {
@@ -94,8 +99,7 @@ public class Board implements Display {
 				System.out.print ("+");
 			} else {
 				if (hasPlayer(i,j))
-					// FIXME Need to print actual player pieces.
-					System.out.print (" * ");
+					System.out.print (" "+player(i,j)+" ");
 				else
 					System.out.print ("   ");	
 			}
