@@ -1,5 +1,6 @@
 package quoridor;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -11,12 +12,32 @@ public class Validator {
 	// you may add extra fields and methods to this class
 	// but the ProvidedTests code will only call the specified methods
 
+	/**
+	 * A hybrid of graph representation suggestions by van Rossum and Cormen et al:
+	 * A hash table is used to associate each vertex with a doubly linked list of adjacent vertices
+	 */
+	HashMap <Square,LinkedList<Square>> adjacencyList = new HashMap <Square,LinkedList<Square>> ();
+	
 	Square player1Square = new Square("e9");
 	Square player2Square = new Square("e1");
 	LinkedList <Wall> walls = new LinkedList<Wall>();
 	
 	public Validator() {
-		// TODO
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				LinkedList<Square> temp = new LinkedList<Square>();
+				for (int di = -1; di < 2; di++) {
+					if (i+di >= 0 && i+di < Board.BOARD_SIZE) {
+						for (int dj = -1; dj < 2; dj++) {
+							if (j+dj >= 0 && j+dj < Board.BOARD_SIZE) {
+								temp.add(new Square(i+di,i+dj));
+							}
+						}
+					}
+				}
+				adjacencyList.put(new Square(i,j), temp);
+			}
+		}
 	}
 
 	/**
