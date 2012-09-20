@@ -22,6 +22,9 @@ public class Validator {
 	Square player2Square = new Square("e1");
 	LinkedList <Wall> walls = new LinkedList<Wall>();
 	
+	Player player1 = new Player();
+	Player player2 = new Player();
+	
 	public Validator() {
 		for (int i = 0; i < Board.BOARD_SIZE; i++) {
 			for (int j = 0; j < Board.BOARD_SIZE; j++) {
@@ -55,11 +58,13 @@ public class Validator {
 	 * @return validity of the list of moves
 	 */
 	public boolean check(String moves) {
+		boolean valid = true;
 		StringTokenizer st = new StringTokenizer(moves);
 		for (int i = 0; st.hasMoreTokens() ; i++) {
 			String temp = st.nextToken();
 			if (temp.length() == 3) {
-				walls.add(new Wall(temp));
+				valid &= insertWall(new Wall(temp));
+				//walls.add(new Wall(temp));
 			} else {
 				if (i%2==0) {
 					if (isAdjacent(player1Square, new Square(temp))) {
@@ -76,7 +81,7 @@ public class Validator {
 				}
 			}
 		}
-		return false;
+		return valid;
 	}
 	
 	/**
@@ -121,4 +126,101 @@ public class Validator {
 		}
 		return false;
 	}
+	
+	public LinkedList <Square> shortestPath (Square src, Square dest) {
+		return null;
+	}
+	
+	/**
+	 * @param src
+	 * @param dest
+	 * @return 0 if no path exists
+	 */
+	public int distance (Square src, Square dest) {
+		return shortestPath (src, dest).size ();
+	}
+	
+	public boolean hasPath (Square src, Square dest) {
+		return distance (src, dest) > 0;
+	}
+	
+	public boolean hasPathToGoal () {
+		boolean player1HasPath = false;
+		boolean player2HasPath = false;
+		for (int i = 0; i < Board.BOARD_SIZE; i++) {
+			if (!player1HasPath)
+				player1HasPath |= hasPath(player1Square, new Square(0,i));
+			if (!player2HasPath)
+				player2HasPath |= hasPath(player2Square, new Square(8,i));
+		}
+		return player1HasPath && player2HasPath;
+	}
+	
+	public boolean insertWall (Wall wall) {
+		
+		// Check wall is not intersecting existing wall
+		if (wall.orientation == Orientation.HORIZONTAL) {
+			if (walls.contains(wall) || walls.contains(wall.neighbor(0, 0, Orientation.VERTICAL)) || walls.contains(wall.neighbor(0, -1, Orientation.HORIZONTAL)) || walls.contains(wall.neighbor(0, 1, Orientation.HORIZONTAL))) {
+				return false;
+			}
+		} else {
+			if (walls.contains(wall) || walls.contains(wall.neighbor(0, 0, Orientation.HORIZONTAL)) || walls.contains(wall.neighbor(-1, 0, Orientation.VERTICAL)) || walls.contains(wall.neighbor(1, 0, Orientation.VERTICAL))) {
+				return false;
+			}
+		}
+		
+		// If the wall does not intersect existing walls, proceed to update the graph
+		// to remove associated edges
+		HashMap <Square, LinkedList<Square>> backup = new HashMap<Square, LinkedList<Square>>(adjacencyList);
+		if (wall.orientation==Orientation.HORIZONTAL) {
+			removeEdge(wall.northWest, wall.northWest.neighbor(1, 0));
+			removeEdge(wall.northWest.neighbor(0, 1), wall.northWest.neighbor(1,1));
+		} else {
+			removeEdge(wall.northWest, wall.northWest.neighbor(0, 1));
+			removeEdge(wall.northWest.neighbor(1, 0), wall.northWest.neighbor(1,1));
+		}
+		
+		// If we remove paths to the goal for any player 
+		// by the placement of a wall, undo it, otherwise
+		// store the new wall in the list of walls
+		if (hasPathToGoal()) {
+			walls.add(wall);
+			return true;
+		} else {
+			adjacencyList = backup;
+			return false;
+		}
+	}
+	
+	// Need to check preconditions
+	public void removeEdge (Square a, Square b) {
+		adjacencyList.get(a).remove(b);
+		adjacencyList.get(b).remove(a);
+	}
+	
+	// This is not really the same thing as "addEdge" so not names as such.
+	// It is intended to "undo" a removeEdge.
+	public void unremoveEdge (Square a, Square b) {
+		adjacencyList.get(a).add(b);
+		adjacencyList.get(b).add(a);
+	}
+	
+	// TODO This is so wrong LMFAO. I must've been high or something #YOLO #SWAG
+	public int[][] adjacencyMatrix () {
+		int[][] adjacencyMatrix = new int[81][81];
+		int i = 0;
+		for (Square e:adjacencyList.keySet()) {
+			// System.out.println(e+": "+adjacencyList.get(e));
+			for (int j = 0; j < Board.BOARD_SIZE; j++) {
+				if (adjacencyList.get(e).contains(new Square(i,j))) {
+					adjacencyMatrix[i][j]=1;
+				} else {
+					adjacencyMatrix[i][j]=0;
+				}
+			}
+			i++;
+		}
+		return adjacencyMatrix;
+	}
+	
 }

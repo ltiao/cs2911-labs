@@ -17,6 +17,10 @@ public class Wall {
         }
     }
 	
+    public Wall neighbor (int row, int column, Orientation orientation) {
+    	return new Wall(this.northWest.neighbor(row, column), orientation);
+    }
+    
 	public Square getNorthWest() {
 		return northWest;
 	}

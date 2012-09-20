@@ -13,9 +13,9 @@ public class Square {
     public Square() {
     }
 	
-    public Square(int x, int y) {
-        this.row = x;
-        this.column = y;
+    public Square(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
     
     public Square(String s) {
@@ -32,6 +32,11 @@ public class Square {
 
     public int getColumn() {
         return column;
+    }
+    
+    //Precondition
+    public Square neighbor(int row, int column) {
+    	return new Square(this.row+row, this.column+column);
     }
     
     @Override
