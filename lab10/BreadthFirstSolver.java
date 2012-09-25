@@ -23,18 +23,18 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 			if (d != 0) {
 				if (zeroIndex+d >= 0 && zeroIndex+d < puzzle.length-1) {
 					System.out.println(zeroIndex+d);
-					neighbors.add(swap(puzzle, zeroIndex, zeroIndex+d));
+					neighbors.add(transposition(puzzle, zeroIndex, zeroIndex+d));
 				}
 				if (zeroIndex+d*n >= 0 && zeroIndex+d*n < puzzle.length-1) {
 					System.out.println(zeroIndex+d*n);
-					neighbors.add(swap(puzzle, zeroIndex, zeroIndex+d*n));
+					neighbors.add(transposition(puzzle, zeroIndex, zeroIndex+d*n));
 				}
 			}
 		}
 		return neighbors;
 	}
 	
-	public int[] swap (int[] array, int i, int j) {
+	public int[] transposition (int[] array, int i, int j) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
