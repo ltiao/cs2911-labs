@@ -9,19 +9,40 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 
 	@Override
 	public int[] solve(int[] start, int[] goal, int maxMoves) {
-		if (Arrays.equals(start, goal))
-			return new int[0]; // Returns empty array if start state is already goal state
-		
+		//if (Arrays.equals(start, goal))
+		//	return new int[0]; // Returns empty array if start state is already goal state		
 		Queue<int[]> q = new LinkedList<int[]>();
-		int[] solution = new int[maxMoves];
-		int n = (int) Math.sqrt(start.length);
 		q.add(start);
 		
-		for (int[] e: q) {
-			if (Arrays.equals(e,goal)) {
-				
+		List <int[]> marker = new LinkedList<int[]>();
+		marker.add(start);
+
+		int i = 0;
+
+		int[] t;
+		while (!q.isEmpty()) {
+			System.out.println(i++);
+			t = q.poll();
+			printPuzzle(t);
+			if (Arrays.equals(t, goal)) {
+				return goal;
+			}
+			for (int[] o:neighbors(t)) {
+				boolean contains = false;
+				for (int[] e:marker) {
+					if (Arrays.equals(e, o)) {
+						contains = true;
+						break;
+					}
+				}
+				if (!contains) {
+					marker.add(o);
+					q.add(o);
+					//i++;
+				}
 			}
 		}
+		
 		return null;
 	}
 	
@@ -34,36 +55,27 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 			if (d != 0) {
 				// Check the column displacement will not alter the row
 				if (zeroIndex+d >= 0 && (zeroIndex+d)/n == zeroIndex/n) {
-					//System.out.println(zeroIndex+d);
-					//System.out.println(Arrays.toString(v));
-					//System.out.println(Arrays.toString(transposition(v, zeroIndex, zeroIndex+d)));
 					neighbors.add(transposition(v, zeroIndex, zeroIndex+d));
 				}
 				if (zeroIndex+d*n >= 0 && zeroIndex+d*n < v.length) {
-					//System.out.println(zeroIndex+d*n);
 					neighbors.add(transposition(v, zeroIndex, zeroIndex+d*n));
 				}
 			}
 		}
-		/*
-		int[][] a = new int[n][n];
-		for (int i = 0; i < v.length; i++) {
-			if (v[i]==0)
-				zeroIndex = i;
-			a[i/n][i%n] = v[i];
-		}
-		
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
-				v[n*i+j]=a[i][j];
-				System.out.print(a[i][j] + " ");
-			}
-			System.out.println();
-		}
-		*/
 		return neighbors;
 	}
 
+	public void printPuzzle (int[] array) {
+		int n = (int) Math.sqrt(array.length);
+		for (int i = 0; i < array.length; i++) {
+			System.out.format("%2d ",array[i]);
+			if ((i+1)/n != i/n) {
+				System.out.println();
+			}
+		}
+		System.out.println();
+	}
+	
 	public int[] transposition (int[] array, int i, int j) {
 		int[] copy = Arrays.copyOf(array, array.length);
 		int temp = copy[i];
