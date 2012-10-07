@@ -1,7 +1,9 @@
 package lab10;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class BreadthFirstSolver implements SlidingBlockSolver {
@@ -12,18 +14,28 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		PuzzleConfiguration goalConf = new PuzzleConfiguration(goal);
 		Queue <PuzzleConfiguration> queue = new LinkedList<PuzzleConfiguration>();
 		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
+		List <Integer> solutionList  = new LinkedList <Integer>();
 		// enqueue start configuration onto queue
 		queue.add(startConf);
 		// mark start configuration
 		marker.put(startConf, true);
 		while (!queue.isEmpty()) {
 			PuzzleConfiguration t = queue.poll();
-			//System.out.println(t);
 			if (t.equals(goalConf)) {
-				return goalConf.puzzle;
+				if (solutionList.size() <= maxMoves) {
+					int[] solutionArray = new int[solutionList.size()];
+					Iterator<Integer> itr = solutionList.iterator();
+					for (int i = 0; itr.hasNext(); i++) {
+						solutionArray[i] = itr.next();
+					}
+					return solutionArray;
+				} else {
+					return null;
+				}
 			}
 			for (int e: t.incidentEdges()) {
 				PuzzleConfiguration o = t.opposite(e);
+				solutionList.add(e); // FIXME Everything is correct modulo this. Need to store paths correctly.
 				if (!marker.containsKey(o)) {
 					marker.put(o, true);
 					queue.add(o);
