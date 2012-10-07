@@ -15,17 +15,17 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		Queue<int[]> q = new LinkedList<int[]>();
 		q.add(start);
 		
-		//List <int[]> marker = new LinkedList<int[]>();
-		//marker.add(start);
+		Queue <Integer> moves = new LinkedList<Integer>();
 		
 		HashMap <PuzzleConfiguration,Boolean> marked = new HashMap<PuzzleConfiguration,Boolean>();
 		marked.put(new PuzzleConfiguration(start), true);
 
 		while (!q.isEmpty()) {
 			int[] t = q.poll();
-			printPuzzle(t);
+			//printPuzzle(t);
 			if (Arrays.equals(t, goal)) {
 				System.out.println(q.size());
+				System.out.println(moves);
 				return goal;
 			}
 			for (Integer e:incidentEdges(t)) {
@@ -37,7 +37,6 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 				}
 			}
 		}
-		
 		return null;
 	}
 	
