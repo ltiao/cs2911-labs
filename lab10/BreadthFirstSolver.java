@@ -16,7 +16,7 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		
 		List <int[]> marker = new LinkedList<int[]>();
 		marker.add(start);
-
+			
 		int i = 0;
 
 		int[] t;
