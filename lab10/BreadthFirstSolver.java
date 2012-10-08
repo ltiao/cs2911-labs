@@ -1,7 +1,6 @@
 package lab10;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -22,12 +21,7 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 			PuzzleConfiguration t = queue.poll();
 			if (t.equals(goalConf)) {
 				if (t.moves.size() <= maxMoves) {
-					int[] solutionArray = new int[t.moves.size()];
-					Iterator<Integer> itr = t.moves.iterator();
-					for (int i = 0; itr.hasNext(); i++) {
-						solutionArray[i] = itr.next();
-					}
-					return solutionArray;
+					return t.moves();
 				} else {
 					return null;
 				}
@@ -37,7 +31,6 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 				if (!marker.containsKey(o)) {
 					marker.put(o, true);
 					queue.add(o);
-					// Be wary of this
 				}
 			}
 		}

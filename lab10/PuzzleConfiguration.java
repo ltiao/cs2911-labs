@@ -4,6 +4,7 @@
 package lab10;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,10 +58,6 @@ public class PuzzleConfiguration {
 		return sb.toString();
 	}
 	
-	public List<PuzzleConfiguration> neighbors() {
-		return null;
-	}
-	
 	public List<Integer> incidentEdges() {
 		LinkedList<Integer> incidentEdges = new LinkedList<Integer>();
 		for (int d = -1 ; d < 2 ; d++) {
@@ -88,7 +85,7 @@ public class PuzzleConfiguration {
 		return opposite;
 	}
 	
-	public List<PuzzleConfiguration> neighbors (int[] v) {
+	public List<PuzzleConfiguration> neighbors () {
 		LinkedList<PuzzleConfiguration> neighbors = new LinkedList<PuzzleConfiguration>();
 		for (int e: incidentEdges()) {
 			neighbors.add(opposite(e));
@@ -96,7 +93,13 @@ public class PuzzleConfiguration {
 		return neighbors;
 	}
 	
-	public void print() {
-		
+	public int[] moves() {
+		int[] moves = new int[this.moves.size()];
+		Iterator<Integer> itr = this.moves.iterator();
+		for (int i = 0; itr.hasNext(); i++) {
+			moves[i] = itr.next();
+		}
+		return moves;
 	}
+	
 }
