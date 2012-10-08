@@ -15,6 +15,7 @@ public class PuzzleConfiguration {
 	int [] puzzle;
 	int zeroPosition;
 	int size;
+	boolean marked;
 	
 	public PuzzleConfiguration(int[] puzzle) {
 		this.puzzle = Arrays.copyOf(puzzle, puzzle.length);
@@ -91,8 +92,5 @@ public class PuzzleConfiguration {
 		}
 		return neighbors;
 	}
-	
-	public void print() {
-		
-	}
+
 }
