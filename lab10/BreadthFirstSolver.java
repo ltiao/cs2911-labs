@@ -1,9 +1,9 @@
 package lab10;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class BreadthFirstSolver implements SlidingBlockSolver {
@@ -14,7 +14,8 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		PuzzleConfiguration goalConf = new PuzzleConfiguration(goal);
 		Queue <PuzzleConfiguration> queue = new LinkedList<PuzzleConfiguration>();
 		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
-		List <Integer> solutionList  = new LinkedList <Integer>();
+		HashMap <PuzzleConfiguration, Integer> parent = new HashMap<PuzzleConfiguration,Integer>();
+		LinkedList <Integer> solutionList  = new LinkedList <Integer>();
 		// enqueue start configuration onto queue
 		queue.add(startConf);
 		// mark start configuration
@@ -22,6 +23,8 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		while (!queue.isEmpty()) {
 			PuzzleConfiguration t = queue.poll();
 			if (t.equals(goalConf)) {
+				System.out.println(t.opposite(parent.get(t)));
+				
 				if (solutionList.size() <= maxMoves) {
 					int[] solutionArray = new int[solutionList.size()];
 					Iterator<Integer> itr = solutionList.iterator();
@@ -35,7 +38,7 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 			}
 			for (int e: t.incidentEdges()) {
 				PuzzleConfiguration o = t.opposite(e);
-				solutionList.add(e); // FIXME Everything is correct modulo this. Need to store paths correctly.
+				parent.put(o, e);
 				if (!marker.containsKey(o)) {
 					marker.put(o, true);
 					queue.add(o);
