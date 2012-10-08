@@ -1,5 +1,6 @@
 package lab10;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,6 +17,8 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
 		HashMap <PuzzleConfiguration,PuzzleConfiguration> parentNode = new HashMap<PuzzleConfiguration,PuzzleConfiguration>();
 		List <Integer> solutionList  = new LinkedList <Integer>();
+		List <PuzzleConfiguration> nodeList  = new LinkedList <PuzzleConfiguration>();
+
 		// enqueue start configuration onto queue
 		queue.add(startConf);
 		// mark start configuration
@@ -23,23 +26,14 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		while (!queue.isEmpty()) {
 			PuzzleConfiguration t = queue.poll();
 			if (t.equals(goalConf)) {
-				/*
-				for (PuzzleConfiguration e:parentNode.keySet()) {
-					System.out.println("Parent: \n" + parentNode.get(e));
-					System.out.println("Child: \n" + e);
-				}
-				System.out.println("Child: \n" + t);
-				System.out.println("Parent: \n" + parentNode.get(t));
-				System.out.println("Grandparent: \n" + parentNode.get(parentNode.get(t)));
-				System.out.println("Great Grandparent: \n" + parentNode.get(parentNode.get(parentNode.get(t))));
-				System.out.println("Great Great Grandparent: \n" + parentNode.get(parentNode.get(parentNode.get(parentNode.get(t)))));	
-				 */
 				PuzzleConfiguration temp = t;
+				nodeList.add(t);
 				while (!temp.equals(startConf)) {
-					System.out.println(temp);
 					temp = parentNode.get(temp);
+					nodeList.add(temp);
 				}
-				
+				Collections.reverse(nodeList);
+				System.out.println(nodeList);
 				if (solutionList.size() <= maxMoves) {
 					int[] solutionArray = new int[solutionList.size()];
 					Iterator<Integer> itr = solutionList.iterator();
