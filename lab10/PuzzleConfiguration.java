@@ -15,6 +15,7 @@ public class PuzzleConfiguration {
 	int [] puzzle;
 	int zeroPosition;
 	int size;
+	boolean marked;
 	
 	public PuzzleConfiguration(int[] puzzle) {
 		this.puzzle = Arrays.copyOf(puzzle, puzzle.length);
@@ -46,7 +47,13 @@ public class PuzzleConfiguration {
 
 	@Override
 	public String toString() {
-		return "PuzzleConfiguration [puzzle=" + Arrays.toString(puzzle) + "]";
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < puzzle.length; i++) {
+			sb.append(String.format("%2d ", puzzle[i]));
+			if ((i+1)/size > i/size)
+				sb.append("\n");
+		}
+		return sb.toString();
 	}
 	
 	public List<PuzzleConfiguration> neighbors() {
@@ -85,8 +92,5 @@ public class PuzzleConfiguration {
 		}
 		return neighbors;
 	}
-	
-	public void print() {
-		
-	}
+
 }
