@@ -1,10 +1,8 @@
 package lab10;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class BreadthFirstSolver implements SlidingBlockSolver {
@@ -15,9 +13,6 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		PuzzleConfiguration goalConf = new PuzzleConfiguration(goal);
 		Queue <PuzzleConfiguration> queue = new LinkedList<PuzzleConfiguration>();
 		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
-		HashMap <PuzzleConfiguration,PuzzleConfiguration> parentNode = new HashMap<PuzzleConfiguration,PuzzleConfiguration>();
-		List <Integer> solutionList  = new LinkedList <Integer>();
-		List <PuzzleConfiguration> nodeList  = new LinkedList <PuzzleConfiguration>();
 
 		// enqueue start configuration onto queue
 		queue.add(startConf);
@@ -26,17 +21,9 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 		while (!queue.isEmpty()) {
 			PuzzleConfiguration t = queue.poll();
 			if (t.equals(goalConf)) {
-				PuzzleConfiguration temp = t;
-				nodeList.add(t);
-				while (!temp.equals(startConf)) {
-					temp = parentNode.get(temp);
-					nodeList.add(temp);
-				}
-				Collections.reverse(nodeList);
-				System.out.println(nodeList);
-				if (solutionList.size() <= maxMoves) {
-					int[] solutionArray = new int[solutionList.size()];
-					Iterator<Integer> itr = solutionList.iterator();
+				if (t.moves.size() <= maxMoves) {
+					int[] solutionArray = new int[t.moves.size()];
+					Iterator<Integer> itr = t.moves.iterator();
 					for (int i = 0; itr.hasNext(); i++) {
 						solutionArray[i] = itr.next();
 					}
@@ -50,7 +37,7 @@ public class BreadthFirstSolver implements SlidingBlockSolver {
 				if (!marker.containsKey(o)) {
 					marker.put(o, true);
 					queue.add(o);
-					parentNode.put(o, t);
+					// Be wary of this
 				}
 			}
 		}

@@ -15,6 +15,7 @@ public class PuzzleConfiguration {
 	int [] puzzle;
 	int zeroPosition;
 	int size;
+	List <Integer> moves = new LinkedList<Integer>();
 	
 	public PuzzleConfiguration(int[] puzzle) {
 		this.puzzle = Arrays.copyOf(puzzle, puzzle.length);
@@ -82,6 +83,8 @@ public class PuzzleConfiguration {
 		opposite.puzzle[zeroPosition] = opposite.puzzle[edge];
 		opposite.puzzle[edge] = temp;
 		opposite.zeroPosition = edge;
+		opposite.moves.addAll(moves);
+		opposite.moves.add(edge);
 		return opposite;
 	}
 	
