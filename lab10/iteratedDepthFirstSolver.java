@@ -1,36 +1,32 @@
 package lab10;
 
 import java.util.HashMap;
-import java.util.Stack;
 
 public class iteratedDepthFirstSolver implements SlidingBlockSolver {
 
+	HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
+	
 	@Override
-	public int[] solve(int[] start, int[] goal, int maxMoves) {
-		PuzzleConfiguration startConf = new PuzzleConfiguration(start);
-		PuzzleConfiguration goalConf = new PuzzleConfiguration(goal);
-		Stack <PuzzleConfiguration> stack = new Stack<PuzzleConfiguration>();
-		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
-
-		// enqueue start configuration onto queue
-		stack.push(startConf);
-		// mark start configuration
-		marker.put(startConf, true);
-		while (!stack.isEmpty()) {
-			PuzzleConfiguration t = stack.pop();
-			System.out.println(t);
-			if (t.equals(goalConf)) {
-				if (t.moves.size() <= maxMoves) {
-					return t.moves();
-				} else {
-					return null;
-				}
+	public int[] solve (int[] start, int[] goal, int maxMoves) {
+		//marker.put(new PuzzleConfiguration(start), true);
+		for (int depth = 0; depth < maxMoves; depth++) {
+			int[] result = DLS(new PuzzleConfiguration(start), new PuzzleConfiguration(goal), depth);
+			if (result != null) {
+				return result;
 			}
-			for (int e: t.incidentEdges()) {
-				PuzzleConfiguration o = t.opposite(e);
-				if (!marker.containsKey(o)) {
-					marker.put(o, true);
-					stack.push(o);
+		}
+		return null;
+	}
+	
+	private int[] DLS(PuzzleConfiguration node, PuzzleConfiguration goal, int depth) {
+		System.out.println(node);
+		if (depth == 0 && node.equals(goal)) {
+			return node.moves();
+		} else if (depth > 0) {
+			for (PuzzleConfiguration e:node.neighbors()) {
+				int[] temp = DLS(e, goal, depth-1);
+				if (temp != null) {
+					return temp;
 				}
 			}
 		}
