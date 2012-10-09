@@ -100,6 +100,26 @@ public class PuzzleConfiguration {
 			moves[i] = itr.next();
 		}
 		return moves;
+	}	
+	
+	public int heuristic () {
+		int sum = 0;
+		for (int i = 0 ; i < puzzle.length; i++) {
+			if (puzzle[i] != 0) {
+				sum += Math.abs(puzzle[i]/size-i/size)+Math.abs(puzzle[i]%size-i%size);
+			}
+		}
+		return sum;
+	}
+	
+	public int heuristic (PuzzleConfiguration goal) {
+		int sum = 0;
+		for (int i = 0 ; i < puzzle.length; i++) {
+			if (puzzle[i] != 0) {
+				sum += Math.abs(puzzle[i]/size-goal.puzzle[i]/size)+Math.abs(puzzle[i]%size-goal.puzzle[i]%size);
+			}
+		}
+		return sum;
 	}
 	
 }

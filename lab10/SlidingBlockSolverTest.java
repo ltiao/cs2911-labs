@@ -12,6 +12,14 @@ public abstract class SlidingBlockSolverTest {
 	@Before
 	public abstract void setUp();
 	
+	//@Test
+	public void testHeuristic() {
+		PuzzleConfiguration temp = new PuzzleConfiguration(new int[] { 1, 0, 3, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+		System.out.println(temp);
+		System.out.println(temp.heuristic( new PuzzleConfiguration(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15})));
+		System.out.println(new PuzzleConfiguration(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}));
+	}
+	
 	@Test
 	public void test4by4_1() {
 		System.out.println(Arrays.toString(sbs.solve(new int[] { 1, 5, 2, 3, 4, 6, 7, 11, 8, 9, 10, 0, 12, 13, 14, 15 }, new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 100000)));		

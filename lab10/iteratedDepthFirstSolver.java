@@ -2,13 +2,12 @@ package lab10;
 
 import java.util.HashMap;
 
-public class iteratedDepthFirstSolver implements SlidingBlockSolver {
+public class IteratedDepthFirstSolver implements SlidingBlockSolver {
 
 	HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
 	
 	@Override
 	public int[] solve (int[] start, int[] goal, int maxMoves) {
-		//marker.put(new PuzzleConfiguration(start), true);
 		for (int depth = 0; depth < maxMoves; depth++) {
 			int[] result = DLS(new PuzzleConfiguration(start), new PuzzleConfiguration(goal), depth);
 			if (result != null) {
