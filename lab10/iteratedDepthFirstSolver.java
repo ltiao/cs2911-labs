@@ -9,15 +9,15 @@ public class iteratedDepthFirstSolver implements SlidingBlockSolver {
 	public int[] solve(int[] start, int[] goal, int maxMoves) {
 		PuzzleConfiguration startConf = new PuzzleConfiguration(start);
 		PuzzleConfiguration goalConf = new PuzzleConfiguration(goal);
-		Stack <PuzzleConfiguration> queue = new Stack<PuzzleConfiguration>();
+		Stack <PuzzleConfiguration> stack = new Stack<PuzzleConfiguration>();
 		HashMap <PuzzleConfiguration,Boolean> marker = new HashMap<PuzzleConfiguration,Boolean>();
 
 		// enqueue start configuration onto queue
-		queue.add(startConf);
+		stack.push(startConf);
 		// mark start configuration
 		marker.put(startConf, true);
-		while (!queue.isEmpty()) {
-			PuzzleConfiguration t = queue.pop();
+		while (!stack.isEmpty()) {
+			PuzzleConfiguration t = stack.pop();
 			System.out.println(t);
 			if (t.equals(goalConf)) {
 				if (t.moves.size() <= maxMoves) {
@@ -30,7 +30,7 @@ public class iteratedDepthFirstSolver implements SlidingBlockSolver {
 				PuzzleConfiguration o = t.opposite(e);
 				if (!marker.containsKey(o)) {
 					marker.put(o, true);
-					queue.push(o);
+					stack.push(o);
 				}
 			}
 		}
